@@ -1,6 +1,6 @@
 # CNM:
 
-CNM is a python package for computational neuroscience modelling. It is designed to be a flexible and easy-to-use tool for building and simulating neural networks and other computational models related to neuroscience. 
+CNM is a python package for computational neuroscience modeling. It is designed to be a flexible and easy-to-use tool for building and simulating neural networks and other computational models related to neuroscience. 
 
 ## Classification of models:
 
@@ -28,7 +28,7 @@ I will be starting the package development by designing the hierarchy of the pac
 ## Installation:
 The project will soon be available for installation through `pip`. For now, you can install the package by cloning the repository and running the following command in the root directory of the project:
 ```bash
-git clone 
+git clone https://github.com/Da4kek/CNM.git
 ```
 
 ## Contribution:
