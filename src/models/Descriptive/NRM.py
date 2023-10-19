@@ -36,3 +36,23 @@ class LNP:
 
         return firing_rates
     
+class ReLUModel:
+    def __init__(self, time_constant, dt):
+        self.time_constant = time_constant
+        self.dt = dt
+        self.membrane_potential = 0  
+        self.firing_rate = []  
+
+    def update_membrane_potential(self, external_input):
+        self.membrane_potential += (external_input - self.membrane_potential) * (self.dt / self.time_constant)
+
+    def simulate(self, external_inputs):
+        for input_value in external_inputs:
+            self.update_membrane_potential(input_value)
+            
+            rate = max(0, self.membrane_potential)
+            self.firing_rate.append(rate)
+    
+    def get_firing_rate(self):
+        return self.firing_rate
+
