@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 from sklearn.cluster import KMeans 
 from sklearn.preprocessing import StandardScaler
+from lime.lime_tabular import LimeTabularExplainer
 
 class Classify_WF:
     def __init__(self,spike_waveforms):
@@ -23,7 +24,14 @@ class Classify_WF:
             plt.figure()
             for sample in cluster_samples:
                 plt.plot(sample,color='g',alpha=0.5,marker='o')
-            plt.title(f"Cluster {id}")
+            plt.title(f"Cluster {'inhibitory' if id == 0 else 'excitatory'}")
         plt.xlabel("Time")
         plt.ylabel("amplitude")
         plt.show()
+    
+    def explain(self, data_point):
+        data_point = np.array(data_point).reshape(1, -1)
+
+        explainer = LimeTabularExplainer(self.spike_waveforms, mode="regression")
+        explanation = explainer.explain_instance(data_point[0], self.fit())
+        explanation.show_in_notebook()
