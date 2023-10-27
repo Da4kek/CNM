@@ -29,9 +29,4 @@ class Classify_WF:
         plt.ylabel("amplitude")
         plt.show()
     
-    def explain(self, data_point):
-        data_point = np.array(data_point).reshape(1, -1)
-
-        explainer = LimeTabularExplainer(self.spike_waveforms, mode="regression")
-        explanation = explainer.explain_instance(data_point[0], self.fit())
-        explanation.show_in_notebook()
+    
