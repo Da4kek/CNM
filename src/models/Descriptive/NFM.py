@@ -34,28 +34,26 @@ class WCM():
         return self.re,self.ri,self.time
     
 class Amari:
-    def __init__(self, a=Decimal('0.1'), b=Decimal('0.2'), c=Decimal('-65.0')):
+    def __init__(self, a=1, b=2, c=-2):
         self.a = a
         self.b = b
         self.c = c
-        self.dt = Decimal('0.001')
+        self.dt = 1
         self.V_ = []
         self.W_ = []
     
-    def initialize(self, V=Decimal('-10.0'), W=Decimal('-14.0')):
+    def initialize(self, V=-1, W=-1):
         self.V = V
         self.W = W
 
     def step(self, Int):
-        dv = (-self.V + self.V**3/Decimal('3.0') - self.W + Int) * self.dt
+        dv = (-self.V + (self.V**3) // 3 - self.W + Int) * self.dt
         dw = (self.a * (self.b * (self.V - self.c) - self.W)) * self.dt
         self.V += dv
         self.W += dw
 
-    def simulate(self, Int, T=Decimal('10.0')):
-        getcontext().prec = 1000 
-        getcontext().Emax = 999999  
-        steps = int(T / self.dt)
+    def simulate(self, Int, T=1):
+        steps = T // self.dt
 
         for _ in range(steps):
             self.step(Int)
@@ -63,6 +61,7 @@ class Amari:
             self.W_.append(self.W)
 
         return self.V_, self.W_
+
 
 
      
