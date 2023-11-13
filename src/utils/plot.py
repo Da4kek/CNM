@@ -9,4 +9,3 @@ def plot_spike(x,y,label=None,title=None,legend=False,xlabel=None,ylabel=None):
     if legend:
         plt.legend()
     plt.show()
-
