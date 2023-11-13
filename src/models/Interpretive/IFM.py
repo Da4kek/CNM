@@ -22,7 +22,13 @@ class LIF():
         return time, mem_pot, spikes
     
 class AdEx():
-    def __init__(self,C,gL,V_rest,DT,V_threshold, a, tw):
+    def __init__(self,C=200.,
+                 gL=10.,
+                 V_rest=-70.,
+                 DT = 2.,
+                 V_threshold=-50.,
+                 a = 2.,
+                 tw=30.):
         self.C = C 
         self.gL = gL
         self.V_rest = V_rest
@@ -51,4 +57,31 @@ class AdEx():
                 adaptive_curr[i] += 10
                 spikes.append(i)
         return time, mem_pot, spikes
-    
+
+
+class ThetaNeuron():
+    def __init__(self, a=0.02, b=0.2, I=2.25, omega=1.0):
+        self.a = a  
+        self.b = b  
+        self.I = I  
+        self.omega = omega  
+
+    def simulate(self, T, dt):
+        time = np.arange(0, T, dt)
+        theta = np.zeros_like(time)
+        spikes = []
+
+        for i in range(1, len(time)):
+            dtheta = (1 - np.cos(theta[i - 1]) + (1 + np.cos(theta[i - 1])) * (self.I + self.a * np.sin(theta[i - 1])) +
+                      self.b * np.cos(theta[i - 1])) * self.omega * dt
+            theta[i] = theta[i - 1] + dtheta
+            if theta[i] > 2 * np.pi:
+                theta[i] -= 2 * np.pi
+            if theta[i] < 0:
+                theta[i] += 2 * np.pi
+
+            if theta[i] > np.pi: 
+                theta[i] = 0
+                spikes.append(time[i])
+
+        return time, theta, spikes
