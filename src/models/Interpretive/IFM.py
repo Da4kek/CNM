@@ -61,10 +61,10 @@ class AdEx():
 
 class ThetaNeuron():
     def __init__(self, a=0.02, b=0.2, I=2.25, omega=1.0):
-        self.a = a  
-        self.b = b  
-        self.I = I  
-        self.omega = omega  
+        self.a = a
+        self.b = b
+        self.I = I
+        self.omega = omega
 
     def simulate(self, T, dt):
         time = np.arange(0, T, dt)
@@ -75,13 +75,8 @@ class ThetaNeuron():
             dtheta = (1 - np.cos(theta[i - 1]) + (1 + np.cos(theta[i - 1])) * (self.I + self.a * np.sin(theta[i - 1])) +
                       self.b * np.cos(theta[i - 1])) * self.omega * dt
             theta[i] = theta[i - 1] + dtheta
-            if theta[i] > 2 * np.pi:
-                theta[i] -= 2 * np.pi
-            if theta[i] < 0:
-                theta[i] += 2 * np.pi
-
-            if theta[i] > np.pi: 
-                theta[i] = 0
+            if theta[i] > np.pi:
+                theta[i] = -np.pi  
                 spikes.append(time[i])
 
         return time, theta, spikes
